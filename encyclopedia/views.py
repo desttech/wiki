@@ -90,7 +90,24 @@ def new(request):
                 util.save_entry(title, content)
                 return HttpResponseRedirect(reverse("encyclopedia:index"))
 
+def edit(request,entry):
+    """ Edit markdown file """
+    if request.method == "GET":
+        content = util.get_entry(entry)
 
+        return render(request,"encyclopedia/edit.html", {
+            "title" : entry ,
+            "content" : content
+
+        })
+    if request.method == "POST":
+        form = request.POST
+        title = form['title']
+        content = form['content']
+
+        util.save_entry(title,content)
+
+        return HttpResponseRedirect(reverse("encyclopedia:page", kwargs={'entry': title}))
 def random_page(request):
     entries = util.list_entries()
     page= random.choice(entries)
