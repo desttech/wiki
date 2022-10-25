@@ -77,12 +77,20 @@ def new(request):
         form_data = request.POST
         title = form_data['title']
         content = form_data['content']
+        if title == "":
+            return render(request,"encyclopedia/result.html", {
+            "message" : "Error page not created because New entry must have a title "
+        })
+        if content == "":
+               return render(request,"encyclopedia/result.html", {
+            "message" : " Error! page not created because content area cannot be empty" })
+
 
         entries = util.list_entries()
         for item in entries:
             # check if title name already exists 
             if item.lower() == title.lower():
-                return render(request, "result.html", {
+                return render(request, "encyclopedia/result.html", {
                     'message' : "Error! New entry was not added because title already exists, change the name and try again"
                 })
 
@@ -108,6 +116,8 @@ def edit(request,entry):
         util.save_entry(title,content)
 
         return HttpResponseRedirect(reverse("encyclopedia:page", kwargs={'entry': title}))
+
+        
 def random_page(request):
     entries = util.list_entries()
     page= random.choice(entries)

@@ -10,10 +10,12 @@
 
 
 <form method="post">
+    <!-- Form for page's title, autofilled via value -->
     <div class="form-group">
         <label for="title">Entry Title:</label>
         <input type="text" name="title" id="title" class="form-control" value={{title}} readonly>
     </div>
+    <!-- Form for page's content (textarea), autofilled between angle brackets -->
     <div class="form-group">
         <label for="content">Entry Content:</label>
         <textarea class="form-control" name="content" rows="15" id="content">{{content}}</textarea>
@@ -24,4 +26,4 @@
 
 {% endblock %}
 
-
+<!-- {#<form action="{% url 'wiki:edit' %}" method="post"> #} -->
